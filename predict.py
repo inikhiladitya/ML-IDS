@@ -16,8 +16,9 @@ model = pickle.load(open('knnIDS.sav','rb'))
 
 def predict_attack(bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
     num_pkts_in,proto,src_port,duration):
-    input=np.array[[bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
-    num_pkts_in,proto,src_port,duration]].astype(np.float64)                        
+    input=np.array([[bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
+    num_pkts_in,proto,src_port,duration]]).astype(np.float64)
+    st.write(input.shape)                        
     result = model.predict(input)
     return result
 
@@ -40,8 +41,7 @@ st.subheader('Uploaded Logs')
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
     st.markdown('Summary of logs')
-    st.write(data)    
-    st.write(data.shape) 
+    st.write(df)    
     
     #Assign columns to variables 
     bytes_in=df.iloc[:,0]
