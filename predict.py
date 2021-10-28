@@ -16,10 +16,12 @@ model = pickle.load(open('knnIDS.sav','rb'))
 
 def predict_attack(bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
     num_pkts_in,proto,src_port,duration):
-    input=np.array([[bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
-    num_pkts_in,proto,src_port,duration]]).astype(np.float64)
-    st.write(input.shape)                        
-    result = model.predict(input)
+    result = []
+    for x in range(0,len(bytes_in)):
+        input=np.array([[bytes_in[x],bytes_out[x],dest_port[x],entropy[x],num_pkts_out[x],
+        num_pkts_in[x],proto[x],src_port[x],duration[x]]]).astype(np.float64)
+        st.write(input.shape)                        
+        result.append(model.predict(input))
     return result
 
 #Head
@@ -59,6 +61,6 @@ else:
 
 #Button to predict
 if st.button("Analyse Logs"):
-    predict_attack(bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
+    f_result=predict_attack(bytes_in,bytes_out,dest_port,entropy,num_pkts_out,
     num_pkts_in,proto,src_port,duration)
-    
+    st.write(f_result)
