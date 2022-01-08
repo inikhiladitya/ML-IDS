@@ -12,7 +12,7 @@ st.set_page_config(page_title='NIDS V1.0',layout='wide')
 
 #Load model
 
-model = pickle.load(open('finalmodel.txt','rb'))
+model = pickle.load(open('ensemble.sav','rb'))
 
 #Function to use pickled model
 
